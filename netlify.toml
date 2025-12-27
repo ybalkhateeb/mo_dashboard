@@ -1,0 +1,30 @@
+# Netlify deployment configuration
+# This file tells Netlify how to build and serve your site
+
+[build]
+  # Command to run for building the site
+  command = "npm run build"
+  
+  # Directory containing the built files to publish
+  publish = "dist"
+
+# Handle client-side routing (SPA support)
+# This redirects all requests to index.html so React Router works correctly
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+
+# Headers for security and performance
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "DENY"
+    X-XSS-Protection = "1; mode=block"
+    X-Content-Type-Options = "nosniff"
+
+# Cache static assets for better performance
+[[headers]]
+  for = "/assets/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
